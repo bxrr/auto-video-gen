@@ -1,0 +1,14 @@
+# ignore venv files
+/Include
+/Lib
+/Scripts
+pyvenv.cfg
+
+# ignore environment variable files
+*.env
+
+# ignore python caches
+__pycache__/
+
+# additional
+/note.txt
