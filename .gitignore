@@ -1,7 +1,7 @@
 # ignore venv files
-/Include
-/Lib
-/Scripts
+Include
+Lib
+Scripts
 pyvenv.cfg
 
 # ignore environment variable files
@@ -12,3 +12,4 @@ __pycache__/
 
 # additional
 /note.txt
+temp

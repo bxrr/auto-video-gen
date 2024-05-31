@@ -8,10 +8,14 @@ from dotenv import load_dotenv
 from typing import Tuple, List
 
 
-load_dotenv("../../../.env")
+load_dotenv()
 
 
 def generate_response(prompt: str) -> str:
+    """
+    Sends HTTP response to GPT to fetch a response from a user provided prompt
+    """
+
     client = Client()
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -21,7 +25,16 @@ def generate_response(prompt: str) -> str:
     return response
 
 
-def generate_script(video_subject: str, paragraph_number: int, language: str) -> str:
+def generate_script(video_subject: str, paragraph_number: int) -> str:
+    """
+    Generates a video scripts
+
+    Args:
+      video_subject (str): the video subject
+      paragraph_number (int): number of paragraphs to generate
+      language (str): language to generate script for
+    """
+    
     prompt = f"""
         Generate a script for a video, depending on the subject of the video.
 
@@ -42,7 +55,7 @@ def generate_script(video_subject: str, paragraph_number: int, language: str) ->
 
         Subject: {video_subject}
         Number of paragraphs: {paragraph_number}
-        Language: {language}
+        Language: English
     """
 
     # Generate script
@@ -79,7 +92,7 @@ def generate_script(video_subject: str, paragraph_number: int, language: str) ->
         return None
 
 
-def get_keywords(vidoe_subject:str, amt:int, script:str)->List[str]: 
+def get_keywords(video_subject:str, amt:int, script:str)->List[str]: 
   """
   Generate a JSON-Array of search terms for stock videos,
   depending on the subject of a video.
@@ -96,7 +109,7 @@ def get_keywords(vidoe_subject:str, amt:int, script:str)->List[str]:
 
   # Build prompt
   prompt = f"""
-  Generate {amount} search terms for stock videos,
+  Generate {amt} search terms for stock videos,
   depending on the subject of a video.
   Subject: {video_subject}
 
@@ -119,7 +132,7 @@ def get_keywords(vidoe_subject:str, amt:int, script:str)->List[str]:
   """
 
   # Generate search terms
-  response = generate_response(prompt, ai_model)
+  response = generate_response(prompt)
   print(response)
 
   # Parse response into a list of search terms
@@ -132,7 +145,7 @@ def get_keywords(vidoe_subject:str, amt:int, script:str)->List[str]:
     # Get everything between the first and last square brackets
     response = response[response.find("[") + 1:response.rfind("]")]
 
-    print(colored("[*] GPT returned an unformatted response. Attempting to clean...", "yellow"))
+    print("[*] GPT returned an unformatted response. Attempting to clean...")
 
     # Attempt to extract list-like string and convert to list
     match = re.search(r'\["(?:[^"\\]|\\.)*"(?:,\s*"[^"\\]*")*\]', response)
@@ -141,7 +154,7 @@ def get_keywords(vidoe_subject:str, amt:int, script:str)->List[str]:
       try:
         search_terms = json.loads(match.group())
       except json.JSONDecodeError:
-        print(colored("[-] Could not parse response.", "red"))
+        print("[-] Could not parse response.")
         return []
     
   

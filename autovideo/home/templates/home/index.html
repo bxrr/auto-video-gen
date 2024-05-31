@@ -1,2 +1,15 @@
 <h1>meow meopwe</h1>
-<h2>{{response}}</h2>
+<p>{{ response }}</p>
+
+{% if video_paths %}
+<ul>
+  {% for path in video_paths %}
+    <li>{{ path }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% if subtitles %}
+<p>
+  {{ subtitles }}
+</p>
+{% endif %}
