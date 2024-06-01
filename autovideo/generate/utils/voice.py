@@ -105,7 +105,6 @@ def tts(
                 audio_base64_data = str(audio).split('"')[3].split(",")[1]
 
             if audio_base64_data == "error":
-                print("[-] This voice is unavailable right now")
                 return "error"
 
         else:
@@ -122,7 +121,6 @@ def tts(
                     base64_data = str(audio).split('"')[3].split(",")[1]
 
                 if audio_base64_data == "error":
-                    print("[-] This voice is unavailable right now")
                     return "error"
 
                 audio_base64_data[index] = base64_data
