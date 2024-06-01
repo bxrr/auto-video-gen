@@ -1,2 +1,12 @@
 <h1>Auto Video Generator</h1>
-<p>Generating video about {{ topic }}</p>
+<p>Generating video about:</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<form action="{% url 'generate:generate' %}">
+  <input name="topic" value="{{ topic }}" readonly="readonly">
+</form>
+<p>See progress and output path in django console</p>
+
+<script type="text/javascript">
+  const form = document.querySelector("form")
+  form.submit()
+</script>

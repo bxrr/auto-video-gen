@@ -42,6 +42,22 @@ def generate_subtitles(audio_path: str) -> str:
     print("[+] Subtitles generated.")
     return subtitles_path
 
+def subtitles_length(subtitles_path: str) -> int:
+    """
+    Looks at the subtitles file to see how long the video should be
+
+    Args:
+        subtitles_path (str): path to subtitles file
+    
+    Returns:
+        int: Number of seconds the video should be
+    """
+
+    with open(subtitles_path, "r") as file:
+        line = file.read().replace("\n","").split(" --> ")[-1]
+        timestamp = int(line.split(",")[0].split(":")[-1])
+        return timestamp + 1
+
 def combine_videos(video_paths: List[str], max_duration: int, max_clip_duration: int, threads: int) -> str:
     """
     Combines a list of videos into one video and returns the path to the combined video.
